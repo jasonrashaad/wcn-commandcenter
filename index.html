@@ -6,63 +6,135 @@
   <title>WCN Command Center</title>
   <style>
     :root {
-      --primary-color: #216869;
-      --secondary-color: #49a078;
-      --accent-color: #9cc5a1;
-      --background-color: #000;
-      --text-color: #dce1de;
+      --primary-color: #000000;
+      --wcn-light: #49a078;
+      --wcn-mid: #216869;
+      --wcn-dark: #1a4645;
+      --wcn-gray: rgba(220, 225, 222, 0.7);
+      --text-color: #ffffff;
       --section-padding: 1rem;
     }
 
     body {
       margin: 0;
       font-family: system-ui, -apple-system, sans-serif;
-      background-color: var(--background-color);
+      background: linear-gradient(to bottom, black, var(--wcn-dark), black);
       color: var(--text-color);
       display: grid;
       grid-template-rows: auto 1fr auto auto;
-      height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
     }
 
     header {
-      background-color: var(--primary-color);
-      padding: var(--section-padding);
+      background: linear-gradient(to right, var(--wcn-mid), var(--wcn-dark));
+      padding: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      background: linear-gradient(to right, var(--wcn-light), var(--wcn-mid), var(--wcn-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 1.5rem;
       font-weight: bold;
-      font-size: 1.25rem;
-      color: var(--accent-color);
     }
 
     .clock {
       font-size: 1rem;
       font-family: monospace;
+      color: var(--wcn-light);
     }
 
     main {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 1rem;
-      padding: var(--section-padding);
+      gap: 2rem;
+      padding: 2rem;
       overflow: hidden;
     }
 
     .section {
-      background-color: rgba(33, 104, 105, 0.2);
-      border-radius: 8px;
-      padding: var(--section-padding);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(26,70,69,0.3));
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(73, 160, 120, 0.2);
+      transition: transform 0.3s ease;
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    .section:hover {
+      transform: scale(1.01);
     }
 
     .section-header {
-      color: var(--accent-color);
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
+      background: linear-gradient(to right, var(--wcn-light), var(--wcn-mid));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 1.25rem;
       font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .video-container {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      width: 300px;
+      height: 169px;
+      border-radius: 12px;
+      overflow: hidden;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transform: translateY(0);
+    }
+
+    .video-container:hover {
+      opacity: 1;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .video-container.minimized {
+      transform: translateY(calc(100% - 40px));
+    }
+
+    .video-container .toggle-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      padding: 0.25rem;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 11;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
     }
 
     .photo-grid {
@@ -70,53 +142,61 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1rem;
       overflow-y: auto;
-      max-height: calc(100vh - 200px);
+      max-height: calc(100vh - 300px);
+      animation: fadeIn 0.8s ease-out 0.2s forwards;
+      opacity: 0;
     }
 
     .photo-grid img {
       width: 100%;
       height: 200px;
       object-fit: cover;
-      border: 2px solid var(--accent-color);
-      border-radius: 8px;
-      transition: transform 0.3s ease;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .photo-grid img:hover {
-      transform: scale(1.05);
+      transform: scale(1.02);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
     }
 
     .news-feed {
       overflow-y: auto;
       max-height: calc(100vh - 200px);
+      animation: fadeIn 0.8s ease-out 0.4s forwards;
+      opacity: 0;
     }
 
     .news-item {
-      padding: 0.5rem;
-      border-bottom: 1px solid var(--primary-color);
+      padding: 1rem;
+      border-bottom: 1px solid rgba(73, 160, 120, 0.2);
+      transition: background-color 0.3s ease;
     }
 
     .news-item:hover {
-      background-color: rgba(73, 160, 120, 0.2);
+      background: linear-gradient(to right, rgba(33, 104, 105, 0.1), rgba(73, 160, 120, 0.1));
     }
 
     .news-item h3 {
       margin: 0;
-      font-size: 1rem;
-      color: var(--accent-color);
+      font-size: 1.1rem;
+      color: var(--wcn-light);
     }
 
     .news-item p {
       margin: 0.5rem 0;
       font-size: 0.9rem;
+      color: var(--wcn-gray);
     }
 
     .ticker {
-      background-color: var(--secondary-color);
-      color: var(--background-color);
-      padding: 0.5rem;
+      background: linear-gradient(to right, var(--wcn-mid), var(--wcn-dark));
+      color: var(--text-color);
+      padding: 0.75rem;
       white-space: nowrap;
       overflow: hidden;
+      border-top: 1px solid rgba(73, 160, 120, 0.2);
     }
 
     .ticker-content {
@@ -126,13 +206,44 @@
     }
 
     .config-panel {
-      background-color: var(--primary-color);
+      background: linear-gradient(to bottom, var(--wcn-dark), var(--primary-color));
       padding: var(--section-padding);
       display: none;
+      border-top: 1px solid var(--wcn-light);
     }
 
     .config-panel.visible {
       display: block;
+    }
+
+    .config-panel h3 {
+      color: var(--wcn-light);
+      margin-top: 0;
+    }
+
+    .config-panel input,
+    .config-panel textarea {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--wcn-mid);
+      color: var(--text-color);
+      padding: 0.5rem;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .config-panel button {
+      background: linear-gradient(to right, var(--wcn-mid), var(--wcn-dark));
+      color: var(--text-color);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .config-panel button:hover {
+      opacity: 0.9;
     }
 
     .error-message {
@@ -146,7 +257,11 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* Loading animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .loading {
       display: flex;
       align-items: center;
@@ -158,7 +273,7 @@
       content: "";
       width: 30px;
       height: 30px;
-      border: 3px solid var(--accent-color);
+      border: 3px solid var(--wcn-light);
       border-radius: 50%;
       border-top-color: transparent;
       animation: spin 1s linear infinite;
@@ -167,16 +282,62 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    /* Add new status indicator styles */
+    .status-indicator {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .status-indicator.visible {
+      opacity: 1;
+    }
+
+    .status-indicator.error {
+      background: rgba(255, 107, 107, 0.2);
+      border: 1px solid #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .status-indicator.success {
+      background: rgba(73, 160, 120, 0.2);
+      border: 1px solid var(--wcn-light);
+      color: var(--wcn-light);
+    }
+
+    /* Update config panel to include PhotoPrism credentials */
+    .config-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .config-group label {
+      display: block;
+      color: var(--wcn-light);
+      margin-bottom: 0.5rem;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">WHAT COMES NEXT?</div>
+    <div class="logo">
+      <img src="/public/images/logo.png" alt="WCN Logo">
+      <span class="logo-text">WHAT COMES NEXT?</span>
+    </div>
     <div class="clock" id="clock">Loading...</div>
   </header>
 
+  <div id="statusIndicator" class="status-indicator"></div>
+
   <main>
     <section class="section">
+      <div class="section-header">Command Center</div>
       <div class="section-header">PhotoPrism Gallery</div>
       <div class="photo-grid" id="photoGrid">
         <div class="loading"></div>
@@ -191,6 +352,11 @@
     </section>
   </main>
 
+  <div class="video-container" id="videoContainer">
+    <button class="toggle-btn" id="toggleVideo">▼</button>
+    <video src="/public/videos/promo.mp4" autoPlay loop muted playsInline></video>
+  </div>
+
   <div class="ticker">
     <div class="ticker-content" id="ticker">
       <span id="tickerContent">Loading ticker content...</span>
@@ -200,16 +366,16 @@
   <div class="config-panel" id="configPanel">
     <h3>Configuration</h3>
     <form id="configForm">
-      <div>
-        <label>PhotoPrism URL:
-          <input type="text" id="photoprismUrl" value="http://localhost:2342">
-        </label>
+      <div class="config-group">
+        <label>PhotoPrism Settings</label>
+        <input type="text" id="photoprismUrl" value="http://localhost:2342" placeholder="PhotoPrism URL">
+        <input type="text" id="photoprismUser" placeholder="Username (optional)">
+        <input type="password" id="photoprismPass" placeholder="Password (optional)">
       </div>
-      <div>
-        <label>RSS Feeds (one per line):
-          <textarea id="rssFeeds">https://news.ycombinator.com/rss
+      <div class="config-group">
+        <label>RSS Feeds (one per line):</label>
+        <textarea id="rssFeeds">https://news.ycombinator.com/rss
 https://feeds.bbci.co.uk/news/rss.xml</textarea>
-        </label>
       </div>
       <button type="submit">Save</button>
     </form>
@@ -219,6 +385,10 @@ https://feeds.bbci.co.uk/news/rss.xml</textarea>
     // Configuration management
     const config = {
       photoprismUrl: 'http://localhost:2342',
+      photoprism: {
+        username: '',
+        password: ''
+      },
       rssFeeds: [
         'https://news.ycombinator.com/rss',
         'https://feeds.bbci.co.uk/news/rss.xml'
@@ -253,31 +423,100 @@ https://feeds.bbci.co.uk/news/rss.xml</textarea>
     setInterval(updateClock, 1000);
     updateClock();
 
-    // PhotoPrism integration
+    // Add status indicator function
+    function showStatus(message, type = 'error') {
+      const indicator = document.getElementById('statusIndicator');
+      indicator.textContent = message;
+      indicator.className = `status-indicator ${type} visible`;
+      setTimeout(() => {
+        indicator.classList.remove('visible');
+      }, 3000);
+    }
+
+    // Add video container toggle
+    document.getElementById('toggleVideo').addEventListener('click', () => {
+      const container = document.getElementById('videoContainer');
+      const btn = document.getElementById('toggleVideo');
+      container.classList.toggle('minimized');
+      btn.textContent = container.classList.contains('minimized') ? '▲' : '▼';
+    });
+
+    // Simplified PhotoPrism integration
     async function loadPhotoPrismImages() {
       const grid = document.getElementById('photoGrid');
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+
+      // Add basic auth if credentials are provided
+      if (config.photoprism.username && config.photoprism.password) {
+        headers['Authorization'] = 'Basic ' + btoa(`${config.photoprism.username}:${config.photoprism.password}`);
+      }
+
       try {
-        const response = await fetch(`${config.photoprismUrl}/api/v1/photos?count=6&order=newest`);
-        if (!response.ok) throw new Error('PhotoPrism API error');
+        const response = await fetch(`${config.photoprismUrl}/api/v1/photos?count=6&order=newest`, {
+          headers,
+          cache: 'no-cache'
+        });
+
+        if (!response.ok) {
+          throw new Error(`PhotoPrism API error: ${response.status}`);
+        }
         
         const data = await response.json();
         if (!data || !data.length) {
-          showError(grid, 'No photos found.');
+          showStatus('No photos found', 'error');
           return;
         }
 
-        grid.innerHTML = '';
-        data.forEach(photo => {
-          const img = document.createElement('img');
-          img.src = `${config.photoprismUrl}/api/v1/thumbnails/${photo.Hash}/tile_224`;
-          img.alt = photo.Title || 'Photo';
-          img.loading = 'lazy';
-          grid.appendChild(img);
-        });
+        renderPhotos(data);
+        showStatus('Photos loaded successfully', 'success');
       } catch (error) {
-        showError(grid, 'Failed to load PhotoPrism images.');
         console.error('PhotoPrism error:', error);
+        showStatus(`Failed to load photos: ${error.message}`, 'error');
       }
+    }
+
+    function renderPhotos(data) {
+      const grid = document.getElementById('photoGrid');
+      grid.innerHTML = '';
+      data.forEach(photo => {
+        const img = document.createElement('img');
+        img.src = `${config.photoprismUrl}/api/v1/thumbnails/${photo.Hash}/tile_224`;
+        img.alt = photo.Title || 'Photo';
+        img.loading = 'lazy';
+        grid.appendChild(img);
+      });
+    }
+
+    // Update config form handling
+    document.getElementById('configForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      config.photoprismUrl = document.getElementById('photoprismUrl').value;
+      config.photoprism.username = document.getElementById('photoprismUser').value;
+      config.photoprism.password = document.getElementById('photoprismPass').value;
+      config.rssFeeds = document.getElementById('rssFeeds').value.split('\n').filter(url => url.trim());
+      
+      localStorage.setItem('wcn_config', JSON.stringify(config));
+      showStatus('Configuration saved', 'success');
+      
+      // Reload data with new config
+      loadPhotoPrismImages();
+      updateNewsFeed();
+      updateTicker();
+    });
+
+    // Load saved config on startup
+    const savedConfig = localStorage.getItem('wcn_config');
+    if (savedConfig) {
+      const parsed = JSON.parse(savedConfig);
+      Object.assign(config, parsed);
+      
+      // Update form fields
+      document.getElementById('photoprismUrl').value = config.photoprismUrl;
+      document.getElementById('photoprismUser').value = config.photoprism.username || '';
+      document.getElementById('photoprismPass').value = config.photoprism.password || '';
+      document.getElementById('rssFeeds').value = config.rssFeeds.join('\n');
     }
 
     // RSS feed integration
