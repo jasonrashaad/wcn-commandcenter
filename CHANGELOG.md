@@ -1,87 +1,100 @@
 # WCN Command Center Changelog
 
-## 2024-03-19: Major Refactor - Ticker-Focused Interface
+## 2024-03-19: Major Refactor and UI Enhancements
 
-### Removed Features
+### Initial Refactor - Ticker-Focused Interface
 - Removed PhotoPrism integration and gallery
 - Removed video container
 - Removed news feed section
 - Cleaned up unused animations and styles
+- Added configurable multi-source ticker system
 
-### Added Features
-#### New Multi-Source Ticker System
-- Configurable data sources:
-  - Stock market data (via Alpha Vantage API)
-  - Weather information (via OpenWeatherMap API)
-  - News headlines (via RSS2JSON API)
-- Smooth infinite scroll animation
-- Color-coded indicators for stocks (green/red)
-- Weather conditions with temperature
-- News headlines with icons
+### Visual Enhancements
+#### Background Watermark (v1.2)
+- Added centered WCN logo watermark
+- Implemented subtle opacity animation (5-15%)
+- Added smooth pulse effect
+- Ensured content visibility with proper z-indexing
 
-#### Enhanced Configuration Panel
-- Toggle individual data sources
-- Configurable stock symbols
-- Weather location settings
-- RSS feed management
-- Adjustable update intervals
-- Settings persistence using localStorage
+#### Header Redesign (v1.3)
+- Updated tagline to "Transformation Begins With a Question..."
+- Enhanced clock display with larger size and decorative elements
+- Added full date display with day of week
+- Improved header styling and spacing
+- Added clock pulse animation effect
+
+### Content Layout Restructure (v1.4)
+#### Main Layout
+- Implemented three-column grid layout
+- Semi-transparent section backgrounds
+- Maintained watermark visibility throughout
+
+#### Video Overlay
+- Repositioned to bottom-left above ticker
+- Added semi-transparent overlay (0.7 opacity)
+- Implemented hover effects (scale and opacity)
+- Added minimize/maximize toggle
+- Smooth transition animations
+
+#### Weather Section
+- Dedicated weather section with 5-day forecast
+- Large current temperature display
+- Detailed current conditions
+- Daily forecast cards
+- 30-minute auto-update interval
+- OpenWeatherMap API integration (requires API key)
+
+#### News Section
+- Image-based news cards
+- Article summaries included
+- Hover effects for interactivity
+- 15-minute auto-update interval
+- NewsAPI integration (requires API key)
+- Fallback placeholder for missing images
+
+#### Market Overview Section
+- Dedicated section for market data
+- Prepared for future stock market integration
 
 ### Technical Details
 #### API Integrations
-- Alpha Vantage API for real-time stock data
-  - Requires API key (placeholder currently in use)
-  - Supports multiple stock symbols
 - OpenWeatherMap API for weather data
-  - Requires API key (placeholder currently in use)
-  - Configurable location
-- RSS2JSON API for news feeds
+  - 5-day forecast support
+  - Imperial units
+  - Location-based weather
+- NewsAPI for news with images
+  - Top headlines support
+  - Image thumbnails
+  - Article descriptions
+- RSS2JSON API for additional news sources
   - No API key required
-  - Supports multiple feed sources
+  - Multiple feed support
 
 #### Configuration Options
 - Stock symbols (comma-separated list)
 - Weather location (city, state format)
 - News feed URLs (one per line)
-- Update interval (10-300 seconds)
+- Update intervals (10-300 seconds)
 - Individual toggle switches for each data source
-
-### Styling Updates
-- Modern gradient backgrounds
-- Smooth animations
-- Improved visibility for ticker items
-- Better configuration panel layout
-- Status notifications for user feedback
 
 ### Next Steps
 1. **API Integration**
-   - Sign up for Alpha Vantage API key
    - Sign up for OpenWeatherMap API key
-   - Replace placeholder data with real API calls
+   - Sign up for NewsAPI key
+   - Replace placeholder API keys in code
 
-2. **Potential Enhancements**
+2. **Content Setup**
+   - Add news placeholder image
+   - Configure desired news sources
+   - Set preferred weather location
+
+3. **Potential Enhancements**
    - Additional data sources
    - Custom styling options
-   - More ticker customization options
+   - More ticker customization
    - Additional news feed formats
-
-### Usage Instructions
-1. Access the configuration panel by pressing 'c'
-2. Configure desired data sources:
-   - Enter stock symbols
-   - Set weather location
-   - Add news feed URLs
-   - Adjust update frequency
-3. Toggle sources on/off as needed
-4. Save configuration
-
-### Notes
-- All settings are preserved in browser localStorage
-- Default update interval: 30 seconds
-- Ticker automatically adjusts to available data
-- Smooth infinite scroll for continuous display
 
 ### Version Tag
 ```bash
-git tag -a v1.1-ticker -m "Refactored to ticker-focused interface with multiple data sources"
+git tag -a v1.4-layout -m "Implemented full layout with weather, news, and video sections"
 ``` 
