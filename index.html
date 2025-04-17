@@ -62,238 +62,156 @@
     }
 
     main {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 2rem;
-      overflow: hidden;
     }
 
-    .section {
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(26,70,69,0.3));
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid rgba(73, 160, 120, 0.2);
-      transition: transform 0.3s ease;
-      animation: fadeIn 0.8s ease-out forwards;
-    }
-
-    .section:hover {
-      transform: scale(1.01);
-    }
-
-    .section-header {
-      background: linear-gradient(to right, var(--wcn-light), var(--wcn-mid));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-    }
-
-    .video-container {
+    .ticker-container {
       position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      width: 300px;
-      height: 169px;
-      border-radius: 12px;
-      overflow: hidden;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      z-index: 10;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      transform: translateY(0);
-    }
-
-    .video-container:hover {
-      opacity: 1;
-      transform: translateY(-5px);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .video-container.minimized {
-      transform: translateY(calc(100% - 40px));
-    }
-
-    .video-container .toggle-btn {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: rgba(0, 0, 0, 0.5);
-      border: none;
-      color: white;
-      padding: 0.25rem;
-      border-radius: 4px;
-      cursor: pointer;
-      z-index: 11;
-    }
-
-    .video-container video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 16px;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-      overflow-y: auto;
-      max-height: calc(100vh - 300px);
-      animation: fadeIn 0.8s ease-out 0.2s forwards;
-      opacity: 0;
-    }
-
-    .photo-grid img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 16px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .photo-grid img:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
-    }
-
-    .news-feed {
-      overflow-y: auto;
-      max-height: calc(100vh - 200px);
-      animation: fadeIn 0.8s ease-out 0.4s forwards;
-      opacity: 0;
-    }
-
-    .news-item {
-      padding: 1rem;
-      border-bottom: 1px solid rgba(73, 160, 120, 0.2);
-      transition: background-color 0.3s ease;
-    }
-
-    .news-item:hover {
-      background: linear-gradient(to right, rgba(33, 104, 105, 0.1), rgba(73, 160, 120, 0.1));
-    }
-
-    .news-item h3 {
-      margin: 0;
-      font-size: 1.1rem;
-      color: var(--wcn-light);
-    }
-
-    .news-item p {
-      margin: 0.5rem 0;
-      font-size: 0.9rem;
-      color: var(--wcn-gray);
-    }
-
-    .ticker {
+      bottom: 0;
+      left: 0;
+      right: 0;
       background: linear-gradient(to right, var(--wcn-mid), var(--wcn-dark));
       color: var(--text-color);
-      padding: 0.75rem;
-      white-space: nowrap;
-      overflow: hidden;
-      border-top: 1px solid rgba(73, 160, 120, 0.2);
+      border-top: 1px solid var(--wcn-light);
     }
 
-    .ticker-content {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scroll-left 30s linear infinite;
+    .ticker-wrapper {
+      display: flex;
+      overflow: hidden;
+      padding: 0.75rem 0;
+    }
+
+    .ticker-label {
+      background: var(--wcn-light);
+      color: black;
+      padding: 0.25rem 1rem;
+      margin-right: 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .ticker-scroll {
+      display: flex;
+      gap: 2rem;
+      animation: scroll 60s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 1rem;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .ticker-item.stock-up {
+      color: #4caf50;
+    }
+
+    .ticker-item.stock-down {
+      color: #ff5252;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
     }
 
     .config-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       background: linear-gradient(to bottom, var(--wcn-dark), var(--primary-color));
-      padding: var(--section-padding);
+      padding: 2rem;
       display: none;
-      border-top: 1px solid var(--wcn-light);
+      z-index: 1000;
+      border-top: 2px solid var(--wcn-light);
     }
 
     .config-panel.visible {
       display: block;
     }
 
-    .config-panel h3 {
-      color: var(--wcn-light);
-      margin-top: 0;
+    .config-group {
+      margin-bottom: 1.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 1rem;
+      border-radius: 8px;
     }
 
-    .config-panel input,
-    .config-panel textarea {
+    .config-group label {
+      display: block;
+      color: var(--wcn-light);
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .config-group input,
+    .config-group textarea {
+      width: 100%;
+      padding: 0.75rem;
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid var(--wcn-mid);
       color: var(--text-color);
-      padding: 0.5rem;
       border-radius: 4px;
-      width: 100%;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .config-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
     }
 
     .config-panel button {
-      background: linear-gradient(to right, var(--wcn-mid), var(--wcn-dark));
+      background: linear-gradient(to right, var(--wcn-mid), var(--wcn-light));
       color: var(--text-color);
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1.5rem;
       border-radius: 4px;
       cursor: pointer;
-      transition: opacity 0.3s ease;
+      width: 100%;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
 
     .config-panel button:hover {
       opacity: 0.9;
+      transform: translateY(-2px);
     }
 
-    .error-message {
-      color: #ff6b6b;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    @keyframes scroll-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .loading::after {
-      content: "";
-      width: 30px;
-      height: 30px;
-      border: 3px solid var(--wcn-light);
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Add new status indicator styles */
     .status-indicator {
       position: fixed;
       top: 1rem;
       right: 1rem;
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1.5rem;
       border-radius: 8px;
       font-size: 0.9rem;
-      z-index: 100;
+      z-index: 1001;
       opacity: 0;
       transition: opacity 0.3s ease;
+      background: rgba(0, 0, 0, 0.9);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 
     .status-indicator.visible {
@@ -301,26 +219,15 @@
     }
 
     .status-indicator.error {
-      background: rgba(255, 107, 107, 0.2);
+      background: rgba(255, 107, 107, 0.1);
       border: 1px solid #ff6b6b;
       color: #ff6b6b;
     }
 
     .status-indicator.success {
-      background: rgba(73, 160, 120, 0.2);
+      background: rgba(73, 160, 120, 0.1);
       border: 1px solid var(--wcn-light);
       color: var(--wcn-light);
-    }
-
-    /* Update config panel to include PhotoPrism credentials */
-    .config-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .config-group label {
-      display: block;
-      color: var(--wcn-light);
-      margin-bottom: 0.5rem;
     }
   </style>
 </head>
@@ -335,78 +242,82 @@
 
   <div id="statusIndicator" class="status-indicator"></div>
 
-  <main>
-    <section class="section">
-      <div class="section-header">Command Center</div>
-      <div class="section-header">PhotoPrism Gallery</div>
-      <div class="photo-grid" id="photoGrid">
-        <div class="loading"></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-header">News Feed</div>
-      <div class="news-feed" id="newsFeed">
-        <div class="loading"></div>
-      </div>
-    </section>
+  <main id="mainContent">
+    <!-- Main content area for future use -->
   </main>
 
-  <div class="video-container" id="videoContainer">
-    <button class="toggle-btn" id="toggleVideo">▼</button>
-    <video src="/public/videos/promo.mp4" autoPlay loop muted playsInline></video>
-  </div>
-
-  <div class="ticker">
-    <div class="ticker-content" id="ticker">
-      <span id="tickerContent">Loading ticker content...</span>
+  <div class="ticker-container">
+    <div class="ticker-wrapper">
+      <div class="ticker-scroll" id="tickerContent">
+        <div class="ticker-item">Loading ticker content...</div>
+      </div>
     </div>
   </div>
 
   <div class="config-panel" id="configPanel">
-    <h3>Configuration</h3>
+    <h3 style="color: var(--wcn-light); margin-top: 0;">Ticker Configuration</h3>
     <form id="configForm">
       <div class="config-group">
-        <label>PhotoPrism Settings</label>
-        <input type="text" id="photoprismUrl" value="http://localhost:2342" placeholder="PhotoPrism URL">
-        <input type="text" id="photoprismUser" placeholder="Username (optional)">
-        <input type="password" id="photoprismPass" placeholder="Password (optional)">
+        <label>Data Sources</label>
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" id="showStocks" checked>
+            Stocks
+          </label>
+          <label>
+            <input type="checkbox" id="showWeather" checked>
+            Weather
+          </label>
+          <label>
+            <input type="checkbox" id="showNews" checked>
+            News
+          </label>
+        </div>
       </div>
       <div class="config-group">
-        <label>RSS Feeds (one per line):</label>
-        <textarea id="rssFeeds">https://news.ycombinator.com/rss
+        <label>Stock Symbols (comma-separated)</label>
+        <input type="text" id="stockSymbols" value="AAPL,MSFT,GOOGL" placeholder="e.g., AAPL,MSFT,GOOGL">
+      </div>
+      <div class="config-group">
+        <label>Weather Location</label>
+        <input type="text" id="weatherLocation" value="Charlotte, NC" placeholder="City, State">
+      </div>
+      <div class="config-group">
+        <label>News Sources (one per line)</label>
+        <textarea id="newsSources">https://news.ycombinator.com/rss
 https://feeds.bbci.co.uk/news/rss.xml</textarea>
       </div>
-      <button type="submit">Save</button>
+      <div class="config-group">
+        <label>Update Interval (seconds)</label>
+        <input type="number" id="updateInterval" value="30" min="10" max="300">
+      </div>
+      <button type="submit">Save Configuration</button>
     </form>
   </div>
 
   <script>
     // Configuration management
     const config = {
-      photoprismUrl: 'http://localhost:2342',
-      photoprism: {
-        username: '',
-        password: ''
-      },
-      rssFeeds: [
+      showStocks: true,
+      showWeather: true,
+      showNews: true,
+      stockSymbols: ['AAPL', 'MSFT', 'GOOGL'],
+      weatherLocation: 'Charlotte, NC',
+      newsSources: [
         'https://news.ycombinator.com/rss',
         'https://feeds.bbci.co.uk/news/rss.xml'
       ],
-      updateIntervals: {
-        photos: 5 * 60 * 1000, // 5 minutes
-        news: 15 * 60 * 1000,  // 15 minutes
-        ticker: 30 * 1000      // 30 seconds
-      }
+      updateInterval: 30
     };
 
     // Utility functions
-    function showError(element, message) {
-      element.innerHTML = `<div class="error-message">${message}</div>`;
-    }
-
-    function showLoading(element) {
-      element.innerHTML = '<div class="loading"></div>';
+    function showStatus(message, type = 'error') {
+      const indicator = document.getElementById('statusIndicator');
+      indicator.innerHTML = message;
+      indicator.className = `status-indicator ${type} visible`;
+      setTimeout(() => {
+        indicator.classList.remove('visible');
+      }, type === 'error' ? 6000 : 3000);
     }
 
     // Clock functionality
@@ -423,177 +334,158 @@ https://feeds.bbci.co.uk/news/rss.xml</textarea>
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Add status indicator function
-    function showStatus(message, type = 'error') {
-      const indicator = document.getElementById('statusIndicator');
-      indicator.textContent = message;
-      indicator.className = `status-indicator ${type} visible`;
-      setTimeout(() => {
-        indicator.classList.remove('visible');
-      }, 3000);
-    }
-
-    // Add video container toggle
-    document.getElementById('toggleVideo').addEventListener('click', () => {
-      const container = document.getElementById('videoContainer');
-      const btn = document.getElementById('toggleVideo');
-      container.classList.toggle('minimized');
-      btn.textContent = container.classList.contains('minimized') ? '▲' : '▼';
-    });
-
-    // Simplified PhotoPrism integration
-    async function loadPhotoPrismImages() {
-      const grid = document.getElementById('photoGrid');
-      const headers = {
-        'Content-Type': 'application/json'
-      };
-
-      // Add basic auth if credentials are provided
-      if (config.photoprism.username && config.photoprism.password) {
-        headers['Authorization'] = 'Basic ' + btoa(`${config.photoprism.username}:${config.photoprism.password}`);
-      }
-
-      try {
-        const response = await fetch(`${config.photoprismUrl}/api/v1/photos?count=6&order=newest`, {
-          headers,
-          cache: 'no-cache'
-        });
-
-        if (!response.ok) {
-          throw new Error(`PhotoPrism API error: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        if (!data || !data.length) {
-          showStatus('No photos found', 'error');
-          return;
-        }
-
-        renderPhotos(data);
-        showStatus('Photos loaded successfully', 'success');
-      } catch (error) {
-        console.error('PhotoPrism error:', error);
-        showStatus(`Failed to load photos: ${error.message}`, 'error');
-      }
-    }
-
-    function renderPhotos(data) {
-      const grid = document.getElementById('photoGrid');
-      grid.innerHTML = '';
-      data.forEach(photo => {
-        const img = document.createElement('img');
-        img.src = `${config.photoprismUrl}/api/v1/thumbnails/${photo.Hash}/tile_224`;
-        img.alt = photo.Title || 'Photo';
-        img.loading = 'lazy';
-        grid.appendChild(img);
-      });
-    }
-
-    // Update config form handling
-    document.getElementById('configForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      config.photoprismUrl = document.getElementById('photoprismUrl').value;
-      config.photoprism.username = document.getElementById('photoprismUser').value;
-      config.photoprism.password = document.getElementById('photoprismPass').value;
-      config.rssFeeds = document.getElementById('rssFeeds').value.split('\n').filter(url => url.trim());
-      
-      localStorage.setItem('wcn_config', JSON.stringify(config));
-      showStatus('Configuration saved', 'success');
-      
-      // Reload data with new config
-      loadPhotoPrismImages();
-      updateNewsFeed();
-      updateTicker();
-    });
-
-    // Load saved config on startup
-    const savedConfig = localStorage.getItem('wcn_config');
-    if (savedConfig) {
-      const parsed = JSON.parse(savedConfig);
-      Object.assign(config, parsed);
-      
-      // Update form fields
-      document.getElementById('photoprismUrl').value = config.photoprismUrl;
-      document.getElementById('photoprismUser').value = config.photoprism.username || '';
-      document.getElementById('photoprismPass').value = config.photoprism.password || '';
-      document.getElementById('rssFeeds').value = config.rssFeeds.join('\n');
-    }
-
-    // RSS feed integration
-    async function fetchRSSFeed(url) {
-      try {
-        // Using RSS2JSON API as a proxy since browsers can't directly fetch RSS
-        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`);
-        if (!response.ok) throw new Error('RSS fetch failed');
-        return await response.json();
-      } catch (error) {
-        console.error('RSS fetch error:', error);
-        return null;
-      }
-    }
-
-    async function updateNewsFeed() {
-      const newsFeed = document.getElementById('newsFeed');
-      showLoading(newsFeed);
-      
-      try {
-        const feeds = await Promise.all(config.rssFeeds.map(fetchRSSFeed));
-        const validFeeds = feeds.filter(feed => feed && feed.items);
-        
-        if (validFeeds.length === 0) {
-          showError(newsFeed, 'No news items available.');
-          return;
-        }
-
-        const newsItems = validFeeds
-          .flatMap(feed => feed.items)
-          .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
-          .slice(0, 10);
-
-        newsFeed.innerHTML = newsItems
-          .map(item => `
-            <div class="news-item">
-              <h3>${item.title}</h3>
-              <p>${new Date(item.pubDate).toLocaleString()}</p>
-            </div>
-          `).join('');
-      } catch (error) {
-        showError(newsFeed, 'Failed to load news feed.');
-        console.error('News feed error:', error);
-      }
-    }
-
     // Ticker functionality
-    async function updateTicker() {
-      const tickerContent = document.getElementById('tickerContent');
+    async function fetchStockData() {
+      if (!config.showStocks) return [];
       try {
-        const feeds = await Promise.all(config.rssFeeds.map(fetchRSSFeed));
-        const headlines = feeds
-          .filter(feed => feed && feed.items)
-          .flatMap(feed => feed.items.map(item => item.title))
-          .slice(0, 5);
+        // Using Alpha Vantage API (you'll need to sign up for a free API key)
+        const symbols = config.stockSymbols.join(',');
+        const response = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbols}&apikey=YOUR_API_KEY`);
+        const data = await response.json();
+        // Process and return stock data
+        return config.stockSymbols.map(symbol => ({
+          type: 'stock',
+          symbol,
+          price: '$150.00', // Placeholder - replace with actual API data
+          change: '+2.5%'   // Placeholder - replace with actual API data
+        }));
+      } catch (error) {
+        console.error('Stock API error:', error);
+        return [];
+      }
+    }
 
-        if (headlines.length > 0) {
-          tickerContent.textContent = headlines.join(' | ');
+    async function fetchWeatherData() {
+      if (!config.showWeather) return [];
+      try {
+        // Using OpenWeatherMap API (you'll need to sign up for a free API key)
+        const location = encodeURIComponent(config.weatherLocation);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=YOUR_API_KEY&units=imperial`);
+        const data = await response.json();
+        return [{
+          type: 'weather',
+          location: config.weatherLocation,
+          temp: '72°F', // Placeholder - replace with actual API data
+          condition: 'Sunny' // Placeholder - replace with actual API data
+        }];
+      } catch (error) {
+        console.error('Weather API error:', error);
+        return [];
+      }
+    }
+
+    async function fetchNewsData() {
+      if (!config.showNews) return [];
+      try {
+        const feeds = await Promise.all(config.newsSources.map(url => 
+          fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`)
+            .then(res => res.json())
+        ));
+        
+        return feeds
+          .filter(feed => feed && feed.items)
+          .flatMap(feed => feed.items.slice(0, 3))
+          .map(item => ({
+            type: 'news',
+            title: item.title
+          }));
+      } catch (error) {
+        console.error('News feed error:', error);
+        return [];
+      }
+    }
+
+    function renderTickerItem(item) {
+      switch (item.type) {
+        case 'stock':
+          const isUp = item.change.startsWith('+');
+          return `
+            <div class="ticker-item stock-${isUp ? 'up' : 'down'}">
+              <span>${item.symbol}</span>
+              <span>${item.price}</span>
+              <span>${item.change}</span>
+            </div>
+          `;
+        case 'weather':
+          return `
+            <div class="ticker-item">
+              <span>${item.location}:</span>
+              <span>${item.temp}</span>
+              <span>${item.condition}</span>
+            </div>
+          `;
+        case 'news':
+          return `
+            <div class="ticker-item">
+              <span>📰</span>
+              <span>${item.title}</span>
+            </div>
+          `;
+      }
+    }
+
+    async function updateTicker() {
+      try {
+        const [stocks, weather, news] = await Promise.all([
+          fetchStockData(),
+          fetchWeatherData(),
+          fetchNewsData()
+        ]);
+
+        const allItems = [...stocks, ...weather, ...news];
+        if (allItems.length === 0) {
+          showStatus('No ticker data available', 'error');
+          return;
         }
+
+        const tickerContent = document.getElementById('tickerContent');
+        tickerContent.innerHTML = allItems.map(renderTickerItem).join('');
+        
+        // Clone items for smooth infinite scroll
+        tickerContent.innerHTML += tickerContent.innerHTML;
       } catch (error) {
         console.error('Ticker update error:', error);
-        tickerContent.textContent = 'Failed to load ticker content';
+        showStatus('Failed to update ticker', 'error');
       }
     }
 
-    // Initialize and set update intervals
-    function initialize() {
-      loadPhotoPrismImages();
-      updateNewsFeed();
+    // Configuration panel handling
+    document.getElementById('configForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      config.showStocks = document.getElementById('showStocks').checked;
+      config.showWeather = document.getElementById('showWeather').checked;
+      config.showNews = document.getElementById('showNews').checked;
+      config.stockSymbols = document.getElementById('stockSymbols').value.split(',').map(s => s.trim());
+      config.weatherLocation = document.getElementById('weatherLocation').value.trim();
+      config.newsSources = document.getElementById('newsSources').value.split('\n').filter(url => url.trim());
+      config.updateInterval = parseInt(document.getElementById('updateInterval').value) || 30;
+      
+      localStorage.setItem('wcn_ticker_config', JSON.stringify(config));
+      showStatus('Configuration saved', 'success');
+      
+      // Restart ticker updates with new config
+      clearInterval(tickerInterval);
+      tickerInterval = setInterval(updateTicker, config.updateInterval * 1000);
       updateTicker();
+    });
 
-      setInterval(loadPhotoPrismImages, config.updateIntervals.photos);
-      setInterval(updateNewsFeed, config.updateIntervals.news);
-      setInterval(updateTicker, config.updateIntervals.ticker);
+    // Load saved config
+    const savedConfig = localStorage.getItem('wcn_ticker_config');
+    if (savedConfig) {
+      Object.assign(config, JSON.parse(savedConfig));
+      
+      // Update form fields
+      document.getElementById('showStocks').checked = config.showStocks;
+      document.getElementById('showWeather').checked = config.showWeather;
+      document.getElementById('showNews').checked = config.showNews;
+      document.getElementById('stockSymbols').value = config.stockSymbols.join(',');
+      document.getElementById('weatherLocation').value = config.weatherLocation;
+      document.getElementById('newsSources').value = config.newsSources.join('\n');
+      document.getElementById('updateInterval').value = config.updateInterval;
     }
 
-    // Configuration panel toggle (press 'c' to show/hide)
+    // Configuration panel toggle
     document.addEventListener('keypress', (e) => {
       if (e.key === 'c') {
         const configPanel = document.getElementById('configPanel');
@@ -601,8 +493,10 @@ https://feeds.bbci.co.uk/news/rss.xml</textarea>
       }
     });
 
-    // Start the application
-    initialize();
+    // Initialize ticker updates
+    let tickerInterval = setInterval(updateTicker, config.updateInterval * 1000);
+    updateTicker();
   </script>
 </body>
 </html>
+
