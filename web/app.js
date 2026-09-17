@@ -220,7 +220,7 @@ function fmtUptime(s) {
    keymap → libinput → Chromium). Bindings:
      Right / Down / Enter   next scene        Left / Up   previous scene
      Play-Pause / Space     hold here (pause the loop; again to resume)
-     Back / Escape          resume the loop
+     Back / Escape          resume the loop if held, otherwise jump home (brand)
      r / p / b              jump to reel / pulse / brand (keyboard only)
    Every key is echoed to the server log so unknown remote buttons can be mapped:
    tail -f ~/.cache/wcn-commandcenter.log  */
@@ -248,7 +248,8 @@ document.addEventListener('keydown', (e) => {
       held = false; document.body.classList.remove('held'); if (current === 'photos') { clearTimeout(photoTimer); nextPhoto(); } else next(); break;
     case 'ArrowLeft': case 'ArrowUp': prev(); break;
     case 'MediaPlayPause': case 'MediaPlay': case 'MediaPause': case ' ': hold(!held); break;
-    case 'Escape': case 'BrowserBack': case 'GoBack': if (held) hold(false); break;
+    case 'Escape': case 'Close': case 'BrowserBack': case 'GoBack':   // Back: resume if held, else go home
+      if (held) hold(false); else show('brand'); break;
     case 'r': show('reel'); break;
     case 'p': show('pulse'); break;
     case 'b': show('brand'); break;

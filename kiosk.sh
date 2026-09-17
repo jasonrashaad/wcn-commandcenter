@@ -29,6 +29,8 @@ for dev in /dev/cec1 /dev/cec0; do
   cec-ctl -d "$dev" --playback --osd-name "Command Center" >/dev/null 2>&1
   cec-ctl -d "$dev" --active-source phys-addr="$pa" >/dev/null 2>&1
   pgrep -x cec-follower >/dev/null || { cec-follower -d "$dev" >/dev/null 2>&1 & }
+  # OK/Back/Play arrive as keycodes XKB cannot carry; remap them (see cec-keymap.py).
+  python3 "$(dirname "$0")/cec-keymap.py" >/dev/null 2>&1 || true
   break
 done
 

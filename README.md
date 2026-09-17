@@ -69,7 +69,7 @@ kernel `rc-cec` keymap delivers them to Chromium as ordinary key events — no d
 key path, no root (`/dev/cec*` is group `video`).
 
     Right / Down / OK      next (scene, or next photo)      Left / Up     previous
-    Play-Pause             hold this scene (again to resume)  Back        resume
+    Play-Pause             hold this scene (again to resume)  Back        resume, or go home
     r / p / b              reel / pulse / brand (keyboard only)
 
 Every key the page sees is echoed to the log, so unmapped buttons can be identified.
