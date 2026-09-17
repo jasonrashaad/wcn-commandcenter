@@ -1,0 +1,13 @@
+[Unit]
+Description=wcn-commandcenter — office TV channel (state server)
+
+[Service]
+ExecStart=/usr/bin/python3 %h/wcn-commandcenter/server.py
+EnvironmentFile=-%h/wcn-commandcenter/wcn-commandcenter.env
+Restart=on-failure
+RestartSec=3
+StandardOutput=append:%h/.cache/wcn-commandcenter.log
+StandardError=append:%h/.cache/wcn-commandcenter.log
+
+[Install]
+WantedBy=default.target

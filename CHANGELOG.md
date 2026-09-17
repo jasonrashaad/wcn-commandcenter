@@ -1,5 +1,24 @@
 # WCN Command Center Changelog
 
+## 2026-09-16: v2 — rebuilt on the Raspberry Pi
+
+Seventeen months after v1, rebuilt from nothing in one evening, on the same mood, with the same
+name. v1 lived in a browser tab; v2 lives on `wcn-raspberrypi` and owns the office TV.
+
+- Chromium kiosk at 1080p60 on the Samsung facing the desk; a stdlib Python state server
+  behind it. Entirely user-space on the Pi — no root, nothing under `/etc`.
+- Brand cards for the family: What Comes Next?, Evolutions, The Spark, Coach's Clipboard.
+- **Gallery reel** from the MediaCMS studio's curated ILBTYD playlist (public manifest fallback).
+- **PhotoPrism is back** (v1.2 below removed it) — random geotagged batch, thumbnails proxied.
+- **Pulse** — fleet reachability, studio count, Pi vitals, Jellyfin now-playing / recently added.
+- Samsung remote over HDMI-CEC drives the loop; the ticker did not survive.
+- `deploy.sh`, dry-run by default, like the rest of the fleet.
+
+v1 (below) is kept as history. It was right about the watermark, the clock and the date.
+
+---
+
+
 ## 2024-03-19: Major Refactor and UI Enhancements
 
 ### Initial Refactor - Ticker-Focused Interface

@@ -1,0 +1,4 @@
+# the real config carries API keys — only the .example ships
+wcn-commandcenter.env
+.DS_Store
+__pycache__/

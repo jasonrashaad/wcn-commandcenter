@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WCN Command Center</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- ── Scene: brand idle ─────────────────────────────────────────── -->
+<section class="scene scene-brand" id="scene-brand" data-scene="brand">
+  <div class="brand-mark"><img id="brand-img" alt="" src="/assets/What_Comes_Next.svg"></div>
+  <div class="brand-copy">
+    <p class="eyebrow" id="brand-eyebrow">What Comes Next? LLC</p>
+    <h1 class="brand-name" id="brand-name">What Comes Next?</h1>
+    <div class="rule" id="brand-rule"></div>
+    <p class="brand-line" id="brand-line"></p>
+  </div>
+</section>
+
+<!-- ── Scene: gallery reel ───────────────────────────────────────── -->
+<section class="scene scene-reel" id="scene-reel" data-scene="reel">
+  <video id="reel-video" muted playsinline preload="auto"></video>
+  <div class="reel-shade"></div>
+  <div class="lower-third">
+    <p class="eyebrow"><span id="reel-eyebrow">ILBTYD Gallery</span><span class="sep">·</span><span id="reel-count"></span></p>
+    <h2 class="reel-title" id="reel-title"></h2>
+    <p class="reel-blurb" id="reel-blurb"></p>
+    <div class="progress"><div class="progress-bar" id="reel-progress"></div></div>
+  </div>
+</section>
+
+<!-- ── Scene: photos (PhotoPrism) ────────────────────────────────── -->
+<section class="scene scene-photos" id="scene-photos" data-scene="photos">
+  <img class="photo" id="photo-a" alt="">
+  <img class="photo" id="photo-b" alt="">
+  <div class="photo-shade"></div>
+  <div class="photo-caption">
+    <p class="eyebrow"><span>From the library</span><span class="sep">·</span><span id="photo-when"></span></p>
+    <h2 class="photo-title" id="photo-title"></h2>
+    <p class="photo-place" id="photo-place"></p>
+  </div>
+</section>
+
+<!-- ── Scene: pulse ──────────────────────────────────────────────── -->
+<section class="scene scene-pulse" id="scene-pulse" data-scene="pulse">
+  <div class="pulse-left">
+    <p class="eyebrow">Pulse</p>
+    <h2 class="pulse-title">The fleet, <span id="pulse-summary">…</span></h2>
+    <ul class="fleet" id="fleet"></ul>
+  </div>
+  <div class="pulse-right">
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="stat-studio">—</div><div class="stat-l">clips in the studio</div></div>
+      <div class="stat"><div class="stat-n" id="stat-gallery">—</div><div class="stat-l">in the gallery</div></div>
+      <div class="stat"><div class="stat-n" id="stat-temp">—</div><div class="stat-l">this Pi, °C</div></div>
+      <div class="stat"><div class="stat-n" id="stat-up">—</div><div class="stat-l">uptime</div></div>
+    </div>
+    <div class="jf" id="jf">
+      <p class="eyebrow">Jellyfin</p>
+      <div class="jf-body" id="jf-body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Persistent chrome ─────────────────────────────────────────── -->
+<footer class="chrome">
+  <div class="chrome-left">
+    <span class="dots" id="dots"></span>
+    <span class="host" id="host">wcn-raspberrypi</span>
+    <span class="sep">·</span>
+    <span class="dim">command center</span>
+  </div>
+  <div class="chrome-right">
+    <span class="date" id="date"></span>
+    <span class="clock" id="clock"></span>
+  </div>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

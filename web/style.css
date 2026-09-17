@@ -1,0 +1,218 @@
+/* wcn-commandcenter — office TV. Designed for 1920×1080 at ~3 m; rem scales with viewport
+   so the same page holds at 4K or 720p. Tokens are the brand kit's: pure black
+   ground (mainpage/ILBTYD), off-white #f4f4f4 — not white — and the four marks'
+   own accents. Raleway is self-hosted (canon: zero third-party requests). */
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/assets/raleway-latin-var.woff2') format('woff2');
+}
+
+:root {
+  --bg:        #000000;
+  --fg:        #f4f4f4;
+  --muted:     rgba(244, 244, 244, 0.82);
+  --dim:       rgba(244, 244, 244, 0.55);
+  --hairline:  rgba(244, 244, 244, 0.16);
+  --teal:      #216869;
+  --amber:     #f4a261;
+  --coral:     #e76f51;
+  --gold:      #eaaa00;
+  --ok:        #4ecb8d;
+  --down:      #e76f51;
+  --accent:    var(--fg);
+  --fade:      1400ms;
+}
+
+html { font-size: calc(100vw / 120); }   /* 16px at 1920 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Raleway', system-ui, -apple-system, sans-serif;
+  font-weight: 300;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.eyebrow {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.sep { color: var(--dim); margin: 0 0.6em; }
+.dim { color: var(--dim); }
+
+/* ── scenes ─────────────────────────────────────────────────────── */
+.scene {
+  position: absolute; inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--fade) ease, visibility 0s linear var(--fade);
+}
+.scene.on {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--fade) ease, visibility 0s;
+}
+
+/* ── brand idle ─────────────────────────────────────────────────── */
+.scene-brand {
+  display: grid;
+  grid-template-columns: 44% 56%;
+  align-items: center;
+  padding: 0 7rem 0 6rem;
+}
+.brand-mark { display: grid; place-items: center; }
+.brand-mark img {
+  width: 30rem; height: 30rem;
+  animation: breathe 9s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.035); }
+}
+.brand-copy { padding-left: 2rem; }
+.brand-name {
+  font-size: 6.4rem;
+  font-weight: 200;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin-top: 1.2rem;
+}
+.rule {
+  width: 6rem; height: 2px;
+  background: var(--accent);
+  margin: 2rem 0 1.8rem;
+  transition: background var(--fade), width 1.6s ease;
+}
+.brand-line {
+  font-size: 1.9rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--muted);
+  max-width: 34ch;
+}
+/* enter animation, re-triggered by toggling .in */
+.brand-copy > * { opacity: 0; transform: translateY(0.6rem); transition: opacity 1.2s ease, transform 1.2s ease; }
+.scene-brand.in .brand-copy > * { opacity: 1; transform: none; }
+.scene-brand.in .brand-copy > :nth-child(2) { transition-delay: 120ms; }
+.scene-brand.in .brand-copy > :nth-child(3) { transition-delay: 260ms; }
+.scene-brand.in .brand-copy > :nth-child(4) { transition-delay: 380ms; }
+.brand-mark img { opacity: 0; transition: opacity 1.6s ease; }
+.scene-brand.in .brand-mark img { opacity: 1; }
+
+/* ── reel ───────────────────────────────────────────────────────── */
+.scene-reel { background: #000; }
+.scene-reel video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+.reel-shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 22%, rgba(0,0,0,0) 48%),
+    linear-gradient(to right, rgba(0,0,0,0.35), rgba(0,0,0,0) 40%);
+}
+.lower-third {
+  position: absolute; left: 6rem; right: 6rem; bottom: 7.5rem;
+}
+.reel-title { font-size: 3.6rem; font-weight: 300; line-height: 1.1; margin-top: 1rem; }
+.reel-blurb { font-size: 1.5rem; color: var(--muted); max-width: 64ch; margin-top: 0.9rem; line-height: 1.4; }
+.progress { height: 2px; background: var(--hairline); margin-top: 1.8rem; width: 40rem; }
+.progress-bar { height: 100%; width: 0; background: var(--fg); transition: width 400ms linear; }
+
+/* ── pulse ──────────────────────────────────────────────────────── */
+.scene-pulse {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  padding: 7rem 7rem 8rem 6rem;
+  align-content: start;
+}
+.pulse-title { font-size: 3.2rem; font-weight: 200; margin: 1rem 0 2.4rem; }
+.fleet { list-style: none; }
+.fleet li {
+  display: grid;
+  grid-template-columns: 1.2rem 1fr auto;
+  gap: 1.4rem;
+  align-items: baseline;
+  padding: 1.05rem 0;
+  border-top: 1px solid var(--hairline);
+  font-size: 1.55rem;
+}
+.fleet li:last-child { border-bottom: 1px solid var(--hairline); }
+.fleet .dot { width: 0.8rem; height: 0.8rem; border-radius: 50%; background: var(--dim); align-self: center; }
+.fleet .dot.ok { background: var(--ok); box-shadow: 0 0 0.9rem rgba(78,203,141,0.45); }
+.fleet .dot.down { background: var(--down); }
+.fleet .name { font-weight: 400; }
+.fleet .role { color: var(--dim); font-size: 1.15rem; margin-left: 1rem; letter-spacing: 0.04em; }
+.fleet .ms { color: var(--dim); font-variant-numeric: tabular-nums; font-size: 1.2rem; }
+
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.2rem 3rem; margin-top: 3.6rem; }
+.stat-n { font-size: 5.2rem; font-weight: 200; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-l { color: var(--dim); font-size: 1.15rem; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 0.7rem; }
+
+.jf { margin-top: 3.6rem; border-top: 1px solid var(--hairline); padding-top: 1.8rem; }
+.jf-body { margin-top: 1rem; font-size: 1.4rem; color: var(--muted); line-height: 1.45; }
+.jf-now { display: grid; grid-template-columns: 8rem 1fr; gap: 1.6rem; align-items: center; }
+.jf-now img { width: 8rem; height: 11rem; object-fit: cover; border-radius: 2px; background: #111; }
+.jf-now .t { font-size: 2rem; color: var(--fg); font-weight: 300; }
+.jf-now .s { color: var(--dim); font-size: 1.15rem; margin-top: 0.4rem; }
+.jf-recent { display: flex; gap: 1rem; margin-top: 0.8rem; }
+.jf-recent img { width: 6rem; height: 8.5rem; object-fit: cover; border-radius: 2px; background: #111; }
+
+/* ── persistent chrome ─────────────────────────────────────────── */
+.chrome {
+  position: absolute; left: 6rem; right: 6rem; bottom: 2.6rem;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: opacity var(--fade);
+  z-index: 5;
+}
+body.reel .chrome { opacity: 0.45; }
+.chrome .clock { font-size: 2.6rem; font-weight: 200; letter-spacing: 0.02em; text-transform: none; color: var(--fg); margin-left: 1.6rem; font-variant-numeric: tabular-nums; }
+.chrome .date { letter-spacing: 0.22em; }
+.dots { display: inline-flex; gap: 0.45rem; margin-right: 1.2rem; vertical-align: middle; }
+.dots i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--hairline); display: inline-block; }
+.dots i.ok { background: var(--ok); }
+.dots i.down { background: var(--down); }
+
+/* hold (Play/Pause on the remote): loop paused, current scene stays */
+body.held .chrome .dim::after { content: ' · held'; color: var(--amber); }
+
+/* ── photos (PhotoPrism) ─────────────────────────────────────── */
+.scene-photos { background: #000; }
+.photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: contain; object-position: center;
+  opacity: 0; transition: opacity 1.6s ease;
+  transform-origin: center; will-change: opacity, transform;
+}
+.photo.on { opacity: 1; animation: drift 24s ease-in-out forwards; }
+.photo.cover { object-fit: cover; }
+@keyframes drift { from { transform: scale(1); } to { transform: scale(1.05); } }
+.photo-shade {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.3) 18%, rgba(0,0,0,0) 36%);
+}
+.photo-caption { position: absolute; left: 6rem; right: 6rem; bottom: 7.5rem; }
+.photo-title { font-size: 2.8rem; font-weight: 300; line-height: 1.15; margin-top: 0.8rem; }
+.photo-place { font-size: 1.4rem; color: var(--muted); margin-top: 0.5rem; }
+body.photos .chrome { opacity: 0.55; }
+/* Portrait photos sit centered between black bars; keep the caption in the left bar. */
+.scene-photos.portrait .photo-caption { max-width: 24rem; }
+.scene-photos.portrait .photo-title { font-size: 2.1rem; }
+.scene-photos.portrait .photo-shade { background: none; }
