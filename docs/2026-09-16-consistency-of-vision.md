@@ -67,3 +67,5 @@ Late. He asked for an in-room card for the remote like the ones under hotel tele
 > I'm just over here trying to keep a lid on it and I plan to use episodes of Abbott Elementary to assist with that thank you for your part in this great adventure Excelsior.
 
 The television in his office is showing the question mark again. Six small green lights in the corner say the fleet is all present. Excelsior.
+
+![Your Remote — the in-room card for Command Center, teal and off-white, with the button guide and the seven-channel lineup](https://raw.githubusercontent.com/jasonrashaad/wcn-commandcenter/main/docs/remote-card.png)
