@@ -89,3 +89,9 @@ Every key the page sees is echoed to the log, so unmapped buttons can be identif
 - Unprivileged `systemctl reboot` is refused while a second (SSH) session is active — polkit.
 - The output is not always configured when labwc autostart fires at cold boot; one
   `wlr-randr` call is silently ignored. Loop until it agrees.
+
+## docs/
+
+- `remote-card.html` — the in-room remote guide, hotel-card style (also published as a Claude artifact).
+- `2026-09-16-consistency-of-vision.md` — the build night, written up by the Claude Code session
+  that did it, for dontnobodygiveashitjason.org.
